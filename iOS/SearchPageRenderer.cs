@@ -91,7 +91,8 @@ namespace Samples.iOS.CustomRenderer
             searchTextField.Layer.BorderWidth = 1;
             searchTextField.Layer.CornerRadius = 5;
             searchTextField.EditingChanged += (sender, e) => element.SetValue(SearchPage.SearchTextProperty, searchTextField.Text);
-
+			searchTextField.KeyboardType = UIKeyboardType.Default;
+			searchTextField.EditingDidEndOnExit += (sender, e) => element.SearchCommand?.Execute(searchTextField.Text);
             searchBar.AddArrangedSubview(searchTextField);
 
             _searchbarButtonItem = new UIBarButtonItem(searchBar);
