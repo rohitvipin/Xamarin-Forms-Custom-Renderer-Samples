@@ -1,5 +1,6 @@
 ﻿using Android.Runtime;
 using Android.Text;
+using Android.Views;
 using Android.Views.InputMethods;
 using Samples.CustomRenderers;
 using Samples.Droid.CustomRenderer;
@@ -23,6 +24,15 @@ namespace Samples.Droid.CustomRenderer
                 return;
             }
 
+            var inflater = LayoutInflater.From(MainActivity.Current);
+
+            var toolbarView = inflater.Inflate(Resource.Layout.Toolbar, null);
+            var toolbar = MainActivity.Current.FindViewById<Android.Support.V7.Widget.Toolbar>(toolbarView.Id);
+
+            MainActivity.ToolBar = toolbar;
+
+            MainActivity.ToolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+
             AddSearchToToolBar();
         }
 
@@ -30,8 +40,8 @@ namespace Samples.Droid.CustomRenderer
         {
             if (_searchView != null)
             {
-                _searchView.QueryTextChange += searchView_QueryTextChange;
-                _searchView.QueryTextSubmit += searchView_QueryTextSubmit;
+                _searchView.QueryTextChange -= searchView_QueryTextChange;
+                _searchView.QueryTextSubmit -= searchView_QueryTextSubmit;
             }
             MainActivity.ToolBar?.Menu?.RemoveItem(Resource.Menu.mainmenu);
             base.Dispose(disposing);
